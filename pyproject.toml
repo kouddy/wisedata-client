@@ -1,11 +1,11 @@
 [tool.poetry]
 name = "datamatic"
-version = "0.1.2"
+version = "0.1.4"
 description = ""
 authors = ["DATA"]
 
 [tool.poetry.dependencies]
-python = "^3.8.9"
+python = "^3.11.4"
 python-dotenv = "^1.0.0"
 requests = "2.31.0"
 retry = "^0.9.2"

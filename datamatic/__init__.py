@@ -17,7 +17,6 @@ class DataMatic:
     load_dotenv()
     self.api_base = api_base if api_base else os.getenv("DATAMATIC_API_BASE")
     self.api_key = api_key if api_key else os.getenv("DATAMATIC_API_KEY")
-    print(self.api_key)
     
   @retry(exceptions=(RequestException, DataMaticInternalError), tries=3, delay=2)
   def sql(self, query, dataframes, code=False):
@@ -52,3 +51,12 @@ class DataMatic:
       pass
     
     return locals["return_df"]
+  
+    # try:
+    #   import pandas as pd
+    #   locals = dataframes.copy()
+    #   locals["pd"] = pd
+    #   exec(python_code + ";return_df=return_df.reset_index(drop=True)", {}, locals)
+    #   return locals["return_df"]
+    # except Exception as e:
+    #   raise DataMaticInternalError("Could not convert the query to a pandas dataframe.")
