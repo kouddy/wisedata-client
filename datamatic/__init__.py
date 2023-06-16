@@ -36,8 +36,15 @@ class DataMatic:
         "content-type": "application/json"
       }
     )
+
     if (response.status_code == 400): raise AuthorizationError()
     if (response.status_code >= 500): raise DataMaticInternalError()
+
+    python_code = response.json()
+    globals = dataframes
+    import pandas as pd
+    globals["pd"] = pd
+    locals = {}
+    exec("import pandas as pd\n" + python_code + ";return_df=return_df.reset_index(drop=True)", globals, locals)
     
-    # TODO: execute the dataframes.
-    return response
+    return locals["return_df"]
