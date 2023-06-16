@@ -15,8 +15,8 @@ class DataMatic:
     api_key=None
   ):
     load_dotenv()
-    self.api_base = os.getenv("DATAMATIC_API_BASE", api_base)
-    self.api_key = os.getenv("DATAMATIC_API_KEY", api_key)
+    self.api_base = api_base if api_base else os.getenv("DATAMATIC_API_BASE")
+    self.api_key = api_key if api_key else os.getenv("DATAMATIC_API_KEY")
     print(self.api_key)
     
   @retry(exceptions=(RequestException, DataMaticInternalError), tries=3, delay=2)
@@ -43,10 +43,12 @@ class DataMatic:
     python_code = response.json()
     if code: return python_code
     
-    globals = dataframes
     import pandas as pd
-    globals["pd"] = pd
-    locals = {}
-    exec("import pandas as pd\n" + python_code + ";return_df=return_df.reset_index(drop=True)", globals, locals)
+    locals = dataframes.copy()
+    locals["pd"] = pd
+    try:
+      exec(python_code + ";return_df=return_df.reset_index(drop=True)", {}, locals)
+    except Exception as e:
+      pass
     
     return locals["return_df"]

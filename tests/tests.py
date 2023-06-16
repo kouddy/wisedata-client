@@ -42,9 +42,8 @@ def test_error():
       "gdp": [19294482071552, 2891615567872, 2411255037952, 3435817336832, 1745433788416, 1181205135360, 1607402389504, 1490967855104, 4380756541440, 14631844184064],
       "happiness_index": [6.94, 7.16, 6.66, 7.07, 6.38, 6.4, 7.23, 7.22, 5.87, 5.12]
   })
-
-  os.environ["DATAMATIC_API_KEY"] = "sk-wrong-key"
-  datamatic = dm.DataMatic()
+  
+  datamatic = dm.DataMatic(api_key="sk-wrong-key")
 
   try:
     datamatic.sql("SELECT * FROM countries", {
@@ -52,3 +51,16 @@ def test_error():
     })
   except AuthorizationError as e:
     print(e)
+
+def test_exception():
+  countries = pd.DataFrame({
+      "country": ["United States", "United Kingdom", "France", "Germany", "Italy", "Spain", "Canada", "Australia", "Japan", "China"],
+      "gdp": [19294482071552, 2891615567872, 2411255037952, 3435817336832, 1745433788416, 1181205135360, 1607402389504, 1490967855104, 4380756541440, 14631844184064],
+      "happiness_index": [6.94, 7.16, 6.66, 7.07, 6.38, 6.4, 7.23, 7.22, 5.87, 5.12]
+  })
+    
+  datamatic = dm.DataMatic()
+  df = datamatic.sql("SELECT COUNT(*) FROM countries", {
+    "countries": countries
+  })
+  print(df)
