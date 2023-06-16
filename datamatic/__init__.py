@@ -11,7 +11,7 @@ from retry import retry
 class DataMatic:
   def __init__(
     self, 
-    api_base="https://data-kit-z9aq.vercel.app/api",
+    api_base="https://datamatic-z9aq.vercel.app/api",
     api_key=None
   ):
     load_dotenv()
