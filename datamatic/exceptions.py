@@ -1,13 +1,13 @@
-class DataKitError(Exception):
+class DataMaticError(Exception):
   def __init__(self, msg):
     self.msg = msg
     super().__init__(f"Error: {self.msg}")
 
-class DataKitInternalError(DataKitError):
+class DataMaticInternalError(DataMaticError):
   """
   Raised when an internal error occurs
   """
 
-class AuthorizationError(DataKitError):
+class AuthorizationError(DataMaticError):
   def __init__(self):
     super().__init__(f"Invalid authorization token.")

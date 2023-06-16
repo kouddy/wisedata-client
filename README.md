@@ -12,4 +12,4 @@ python -m build
 pytest tests/
 
 pip install --upgrade twine
-twine upload --repository pypitest dist/*
+twine upload --repository pypi dist/*

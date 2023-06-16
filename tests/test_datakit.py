@@ -1,7 +1,7 @@
-import datakit as dk
+import datamatic as dm
 import pandas as pd
 
-from datakit.exceptions import AuthorizationError
+from datamatic.exceptions import AuthorizationError
 
 
 def test_simple():
@@ -11,8 +11,8 @@ def test_simple():
       "happiness_index": [6.94, 7.16, 6.66, 7.07, 6.38, 6.4, 7.23, 7.22, 5.87, 5.12]
   })
 
-  datakit = dk.DataKit()
-  response = datakit.sql("SELECT * FROM countries", {
+  datamatic = dm.DataMatic()
+  response = datamatic.sql("SELECT * FROM countries", {
     "countries": countries
   })
   print(response.json())
@@ -29,8 +29,8 @@ def test_multiple_tables():
       "population": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
   })
 
-  datakit = dk.DataKit()
-  response = datakit.sql("SELECT * FROM countries LEFT JOIN country_populations ON countries.country = country_populations.country", {
+  datamatic = dm.DataMatic()
+  response = datamatic.sql("SELECT * FROM countries LEFT JOIN country_populations ON countries.country = country_populations.country", {
     "countries": countries,
     "country_populations": country_populations
   })
@@ -43,10 +43,10 @@ def test_error():
       "happiness_index": [6.94, 7.16, 6.66, 7.07, 6.38, 6.4, 7.23, 7.22, 5.87, 5.12]
   })
 
-  datakit = dk.DataKit(api_key="sk-wrong-key")
+  datamatic = dm.DataMatic(api_key="sk-wrong-key")
 
   try:
-    datakit.sql("SELECT * FROM countries", {
+    datamatic.sql("SELECT * FROM countries", {
       "countries": countries
     })
   except AuthorizationError as e:
