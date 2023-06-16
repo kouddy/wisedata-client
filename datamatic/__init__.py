@@ -20,7 +20,7 @@ class DataMatic:
     print(self.api_key)
     
   @retry(exceptions=(RequestException, DataMaticInternalError), tries=3, delay=2)
-  def sql(self, query, dataframes):
+  def sql(self, query, dataframes, code=False):
     if not (type(dataframes) is dict): raise Exception("dataframes needs to be a dictionary with key being dataframe name and value being the dataframe.")
 
     data = {
@@ -41,6 +41,8 @@ class DataMatic:
     if (response.status_code >= 500): raise DataMaticInternalError()
 
     python_code = response.json()
+    if code: return python_code
+    
     globals = dataframes
     import pandas as pd
     globals["pd"] = pd
