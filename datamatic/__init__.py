@@ -21,7 +21,7 @@ class DataMatic:
   @retry(exceptions=(RequestException, DataMaticInternalError), tries=3, delay=2)
   def sql(self, query, dataframes, error=None, code=False, num_retries=0):
     if not (type(dataframes) is dict): raise Exception("dataframes needs to be a dictionary with key being dataframe name and value being the dataframe.")
-    if num_retries > 3: raise DataMaticInternalError()
+    if num_retries > 3: raise Exception("We couldn't translate your query. :(")
 
     data = {
       "dataframe": "\n".join([f"{idx+1}. Dataframe named {key} with columns {value.columns.tolist()}" for idx, (key, value) in enumerate(dataframes.items())]),
@@ -53,11 +53,12 @@ class DataMatic:
         return_df=locals["return_df"].reset_index(drop=True)
       else:
         num_retries += 1
-        data["error"] = "Not a pandas dataframe. Please return dataframe."
+        data["error"] = "Is not a pandas dataframe. Please return dataframe."
         return_df = self.sql(query, dataframes, error=data["error"], code=code, num_retries=num_retries)
     except Exception as e:
-      print(e)
-      pass
+      num_retries += 1
+      data["error"] = f"Threw exception: `{e}`"
+      return_df = self.sql(query, dataframes, error=data["error"], code=code, num_retries=num_retries)
     
     return return_df
   

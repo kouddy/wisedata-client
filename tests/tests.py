@@ -59,8 +59,12 @@ def test_exception():
       "happiness_index": [6.94, 7.16, 6.66, 7.07, 6.38, 6.4, 7.23, 7.22, 5.87, 5.12]
   })
     
-  datamatic = dm.DataMatic()
-  df = datamatic.sql("SELECT COUNT(*) FROM countries", {
-    "countries": countries
-  })
-  print(df)
+  try:
+    datamatic = dm.DataMatic()
+    datamatic.sql("SELECT COUNT(country) AS NumCountry FROM countries", {
+      "countries": countries
+    })
+  except Exception as e:
+    print(e)
+
+  
