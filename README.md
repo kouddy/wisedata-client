@@ -3,13 +3,11 @@
 python -m venv venv
 source venv/bin/activate
 poetry install
-poetry run pytest tests -s
+poetry run pytest tests/tests.py -s
 
 
 pip install --upgrade build
 python -m build
-
-pytest tests/
 
 pip install --upgrade twine
 twine upload --repository pypi dist/*
