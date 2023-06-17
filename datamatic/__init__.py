@@ -45,10 +45,10 @@ class DataMatic:
     if code: return python_code
     
     import pandas as pd
+    globals = { "pd": pd }
     locals = dataframes.copy()
-    locals["pd"] = pd
     try:
-      exec(python_code, {}, locals) # ;return_df=return_df.reset_index(drop=True)
+      exec(python_code, globals, locals)
       if isinstance(locals["return_df"], pd.DataFrame):
         return_df=locals["return_df"].reset_index(drop=True)
       else:
@@ -61,12 +61,3 @@ class DataMatic:
       return_df = self.sql(query, dataframes, error=data["error"], code=code, num_retries=num_retries)
     
     return return_df
-  
-    # try:
-    #   import pandas as pd
-    #   locals = dataframes.copy()
-    #   locals["pd"] = pd
-    #   exec(python_code + ";return_df=return_df.reset_index(drop=True)", {}, locals)
-    #   return locals["return_df"]
-    # except Exception as e:
-    #   raise DataMaticInternalError("Could not convert the query to a pandas dataframe.")
