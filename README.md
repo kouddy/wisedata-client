@@ -7,7 +7,7 @@ poetry run pytest tests/tests.py -s
 
 
 pip install --upgrade build
-python -m build
+rm -rf dist && python -m build
 
 pip install --upgrade twine
 twine upload --repository pypi dist/*
