@@ -1,3 +1,4 @@
+import logging
 import json
 import os
 import requests
@@ -42,7 +43,6 @@ class DataWise:
     if (response.status_code >= 500): raise DataWiseInternalError()
 
     python_code = response.json()
-    if code: return python_code
     
     import pandas as pd
     globals = { "pd": pd }
@@ -51,6 +51,7 @@ class DataWise:
       exec(python_code, globals, locals)
       if isinstance(locals["return_df"], pd.DataFrame):
         return_df=locals["return_df"].reset_index(drop=True)
+        if code: logging.info(f"Given query: \n{query} \nOutput code: \n{python_code}\n")
       else:
         num_retries += 1
         data["error"] = "Is not a pandas dataframe. Please return dataframe."

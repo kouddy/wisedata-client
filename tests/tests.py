@@ -1,7 +1,15 @@
 import datawise as dw
+import logging
 import pandas as pd
+import sys
 
 from datawise.exceptions import AuthorizationError
+
+root = logging.getLogger()
+root.setLevel(logging.INFO)
+handler = logging.StreamHandler(sys.stdout)
+handler.setLevel(logging.INFO)
+root.addHandler(handler)
 
 def test_simple():
   countries = pd.DataFrame({
@@ -32,7 +40,7 @@ def test_multiple_tables():
   df = datawise.sql("SELECT * FROM countries LEFT JOIN country_populations ON countries.country = country_populations.country", {
     "countries": countries,
     "country_populations": country_populations
-  })
+  }, code=True)
   print(df)
 
 def test_error():
@@ -47,7 +55,7 @@ def test_error():
   try:
     datawise.sql("SELECT * FROM countries", {
       "countries": countries
-    })
+    }, code=True)
   except AuthorizationError as e:
     print(e)
 
@@ -60,10 +68,12 @@ def test_exception():
     
   try:
     datawise = dw.DataWise()
-    datawise.sql("SELECT COUNT(country) AS NumCountry FROM countries", {
+    df = datawise.sql("SELECT COUNT(country) AS NumCountry FROM countries", {
       "countries": countries
-    })
+    }, code=True)
   except Exception as e:
     print(e)
+
+  print(df)
 
   
