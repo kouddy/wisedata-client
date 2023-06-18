@@ -1,8 +1,7 @@
-import datamatic as dm
-import os
+import datawise as dw
 import pandas as pd
 
-from datamatic.exceptions import AuthorizationError
+from datawise.exceptions import AuthorizationError
 
 def test_simple():
   countries = pd.DataFrame({
@@ -11,8 +10,8 @@ def test_simple():
       "happiness_index": [6.94, 7.16, 6.66, 7.07, 6.38, 6.4, 7.23, 7.22, 5.87, 5.12]
   })
 
-  datamatic = dm.DataMatic()
-  df = datamatic.sql("SELECT * FROM countries", {
+  datawise = dw.DataWise()
+  df = datawise.sql("SELECT * FROM countries", {
     "countries": countries
   })
   print(df)
@@ -29,8 +28,8 @@ def test_multiple_tables():
       "population": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
   })
 
-  datamatic = dm.DataMatic()
-  df = datamatic.sql("SELECT * FROM countries LEFT JOIN country_populations ON countries.country = country_populations.country", {
+  datawise = dw.DataWise()
+  df = datawise.sql("SELECT * FROM countries LEFT JOIN country_populations ON countries.country = country_populations.country", {
     "countries": countries,
     "country_populations": country_populations
   })
@@ -43,10 +42,10 @@ def test_error():
       "happiness_index": [6.94, 7.16, 6.66, 7.07, 6.38, 6.4, 7.23, 7.22, 5.87, 5.12]
   })
   
-  datamatic = dm.DataMatic(api_key="sk-wrong-key")
+  datawise = dw.DataWise(api_key="sk-wrong-key")
 
   try:
-    datamatic.sql("SELECT * FROM countries", {
+    datawise.sql("SELECT * FROM countries", {
       "countries": countries
     })
   except AuthorizationError as e:
@@ -60,8 +59,8 @@ def test_exception():
   })
     
   try:
-    datamatic = dm.DataMatic()
-    datamatic.sql("SELECT COUNT(country) AS NumCountry FROM countries", {
+    datawise = dw.DataWise()
+    datawise.sql("SELECT COUNT(country) AS NumCountry FROM countries", {
       "countries": countries
     })
   except Exception as e:

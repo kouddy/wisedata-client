@@ -1,6 +1,6 @@
 [tool.poetry]
-name = "datamatic"
-version = "0.1.7"
+name = "datawise"
+version = "0.0.1"
 description = ""
 authors = ["DATA"]
 
