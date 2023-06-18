@@ -1,4 +1,4 @@
-# data-kit-client
+# datawise-client
 
 python -m venv venv
 source venv/bin/activate
