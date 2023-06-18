@@ -43,7 +43,7 @@ class DataWise:
   @retry(exceptions=(RequestException, DataWiseInternalError), tries=3, delay=2)
   def _sql(self, query, dataframes, error=None, code=False, num_retries=0, prev_code=None):
     if not (type(dataframes) is dict): raise Exception("dataframes needs to be a dictionary with key being dataframe name and value being the dataframe.")
-    if num_retries > 3:
+    if num_retries >= 2:
       logging.error(f"We couldn't translate your query. Here is python code we attempted to generate: \n{prev_code}")
       raise TranslationError()
 

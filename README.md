@@ -32,6 +32,7 @@ pip install pandas numpy
 To transform, simply call `sql` function.
 ```python
 import datawise as dw
+import pandas as pd
 
 countries = pd.DataFrame({
     "country": ["United States", "United Kingdom", "France", "Germany", "Italy", "Spain", "Canada", "Australia", "Japan", "China"],
@@ -56,6 +57,7 @@ The above code will return the following dataframe:
 You can also do joins of multiple dataframes:
 ```python
 import datawise as dw
+import pandas as pd
 
 countries = pd.DataFrame({
     "country": ["United States", "United Kingdom", "France", "Germany", "Italy", "Spain", "Canada", "Australia", "Japan", "China"],
@@ -95,6 +97,13 @@ The above code will return the following dataframe:
 Errors could happen if we cannot translate the SQL query. Consider the following example:
 ```python
 import datawise as dw
+import pandas as pd
+
+countries = pd.DataFrame({
+    "country": ["United States", "United Kingdom", "France", "Germany", "Italy", "Spain", "Canada", "Australia", "Japan", "China"],
+    "gdp": [19294482071552, 2891615567872, 2411255037952, 3435817336832, 1745433788416, 1181205135360, 1607402389504, 1490967855104, 4380756541440, 14631844184064],
+    "happiness_index": [6.94, 7.16, 6.66, 7.07, 6.38, 6.4, 7.23, 7.22, 5.87, 5.12]
+})
 
 datawise = dw.DataWise(api_key="you_api_key_here")
 datawise.sql("SELECT bad_column FROM bad_table", {
@@ -122,7 +131,7 @@ pip install --upgrade build
 rm -rf dist && python -m build
 
 pip install --upgrade twine
-twine upload --repository pypitest dist/*
+twine upload --repository pypi dist/*
 ```
 
 ## 📜 License
