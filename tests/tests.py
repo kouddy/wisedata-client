@@ -3,7 +3,7 @@ import logging
 import pandas as pd
 import sys
 
-from datawise.exceptions import AuthorizationError
+from datawise.exceptions import AuthorizationError, TranslationError
 
 root = logging.getLogger()
 root.setLevel(logging.INFO)
@@ -22,6 +22,11 @@ def test_simple():
   df = datawise.sql("SELECT * FROM countries", {
     "countries": countries
   })
+  print(df)
+
+  df = datawise.sql("SELECT COUNT(country) AS NumCountry FROM countries", {
+    "countries": countries
+  }, code=True)
   print(df)
 
 def test_multiple_tables():
@@ -66,14 +71,10 @@ def test_exception():
       "happiness_index": [6.94, 7.16, 6.66, 7.07, 6.38, 6.4, 7.23, 7.22, 5.87, 5.12]
   })
     
+  datawise = dw.DataWise()
   try:
-    datawise = dw.DataWise()
-    df = datawise.sql("SELECT COUNT(country) AS NumCountry FROM countries", {
+    datawise.sql("SELECT bad_column FROM bad_table", {
       "countries": countries
-    }, code=True)
-  except Exception as e:
-    print(e)
-
-  print(df)
-
-  
+    })
+  except TranslationError:
+    pass

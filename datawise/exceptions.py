@@ -11,3 +11,7 @@ class DataWiseInternalError(DataWiseError):
 class AuthorizationError(DataWiseError):
   def __init__(self):
     super().__init__(f"Invalid authorization token.")
+
+class TranslationError(DataWiseError):
+  def __init__(self, error_msg=""):
+    super().__init__(f"We couldn't translate your query. {error_msg}")
