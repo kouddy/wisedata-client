@@ -3,6 +3,7 @@ name = "datawise"
 version = "0.0.6"
 description = "Testing"
 authors = ["DataWise Team"]
+readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.11.4"
