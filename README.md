@@ -28,9 +28,9 @@ export DATAWISE_API_KEY=sk-...
 
 Or set `api_key` to its value:
 ```python
-import datawise as dw
+from datawise import DataWise
 
-datawise = dw.DataWise(api_key="you_api_key_here")
+dw = DataWise(api_key="you_api_key_here")
 ```
 
 ## Use SQL to transform Pandas dataframes
@@ -46,7 +46,7 @@ pip install pandas numpy
 
 To transform, simply call `sql` function.
 ```python
-import datawise as dw
+from datawise import DataWise
 import pandas as pd
 
 countries = pd.DataFrame({
@@ -55,8 +55,8 @@ countries = pd.DataFrame({
     "happiness_index": [6.94, 7.16, 6.66, 7.07, 6.38, 6.4, 7.23, 7.22, 5.87, 5.12]
 })
 
-datawise = dw.DataWise(api_key="you_api_key_here")
-df = datawise.sql("SELECT COUNT(country) FROM countries", {
+dw = DataWise(api_key="you_api_key_here")
+df = dw.sql("SELECT COUNT(country) FROM countries", {
   "countries": countries
 })
 print(df)
@@ -71,7 +71,7 @@ The above code will return the following dataframe:
 
 You can also do joins of multiple dataframes:
 ```python
-import datawise as dw
+from datawise import DataWise
 import pandas as pd
 
 countries = pd.DataFrame({
@@ -85,8 +85,8 @@ country_populations = pd.DataFrame({
     "population": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
 })
 
-datawise = dw.DataWise(api_key="you_api_key_here")
-df = datawise.sql("SELECT * FROM countries LEFT JOIN country_populations ON countries.country = country_populations.country", {
+dw = DataWise(api_key="you_api_key_here")
+df = dw.sql("SELECT * FROM countries LEFT JOIN country_populations ON countries.country = country_populations.country", {
   "countries": countries,
   "country_populations": country_populations
 })
@@ -131,7 +131,7 @@ root.addHandler(handler)
 
 ...
 
-df = datawise.sql("SELECT COUNT(country) FROM countries", {
+df = dw.sql("SELECT COUNT(country) FROM countries", {
   "countries": countries
 }, code=True)
 ```
@@ -139,7 +139,7 @@ df = datawise.sql("SELECT COUNT(country) FROM countries", {
 ## Error Handling
 Errors could happen if we cannot translate the SQL query. Consider the following example:
 ```python
-import datawise as dw
+from datawise import DataWise
 import pandas as pd
 
 countries = pd.DataFrame({
@@ -148,8 +148,8 @@ countries = pd.DataFrame({
     "happiness_index": [6.94, 7.16, 6.66, 7.07, 6.38, 6.4, 7.23, 7.22, 5.87, 5.12]
 })
 
-datawise = dw.DataWise(api_key="you_api_key_here")
-datawise.sql("SELECT bad_column FROM bad_table", {
+dw = DataWise(api_key="you_api_key_here")
+dw.sql("SELECT bad_column FROM bad_table", {
   "countries": countries
 })
 ```
