@@ -1,13 +1,26 @@
 # DataWise
 
-## 🔧 Quick install
+### DataWise is your co-pilot for performing data analysis and visualization in Python.
 
+## Capabilities
+* Use SQL to transform Pandas dataframes
+* Coming soon: Use English to visualize Pandas dataframes
+
+## Limitations
+* May occasionally generate incorrect results
+
+## 🔍 Demo
+Try out PandasAI in your browser:
+
+[![Open in Colab](https://camo.githubusercontent.com/84f0493939e0c4de4e6dbe113251b4bfb5353e57134ffd9fcab6b8714514d4d1/68747470733a2f2f636f6c61622e72657365617263682e676f6f676c652e636f6d2f6173736574732f636f6c61622d62616467652e737667)](https://colab.research.google.com/drive/1onQI_V6NrAnEDY-o6N068xLyvsFojynf?usp=sharing)
+
+## 🔧 Quick install
+Install DataWise client first:
 ```bash
 pip install datawise
 ```
 
-## 💻 Usage
-This library needs to be configured with your account's API key.
+Configure with your account's API key.
 Either set it as `DATAWISE_API_KEY` environment variable before using the library:
 ```bash
 export DATAWISE_API_KEY=sk-...
@@ -18,13 +31,15 @@ Or set `api_key` to its value:
 import datawise as dw
 
 datawise = dw.DataWise(api_key="you_api_key_here")
-df = datawise.sql(...)
 ```
 
-## SQL Query
-You can use SQL query to transform Pandas dataframes.
+## Use SQL to transform Pandas dataframes
+You can use SQLite style SQL query to transform Pandas dataframes. Example:
+```sql
+SELECT * FROM countries LEFT JOIN country_populations ON countries.country = country_populations.country
+```
 
-You need to install `pandas` and `numpy` packages as pre-requisites.
+You need to install `pandas` and `numpy` packages as pre-requisites for SQL query.
 ```bash
 pip install pandas numpy
 ```
@@ -43,7 +58,7 @@ countries = pd.DataFrame({
 datawise = dw.DataWise(api_key="you_api_key_here")
 df = datawise.sql("SELECT COUNT(country) FROM countries", {
   "countries": countries
-}, code=True) # "code=True" will print out the code in addition to transforming dataframe.
+})
 print(df)
 ```
 
@@ -93,12 +108,33 @@ The above code will return the following dataframe:
 9           China  14631844184064             5.12          10
 ```
 
-## Limitations
-Most of SQLite syntax of SELECT statements are supported.
-Here are some of the limitations at this moment:
-* We don't support Window functions at the moment: https://www.sqlite.org/windowfunctions.html
-* If your query contains WHERE clause with `LIKE` operator, we might not be able to translate it properly.
-* We might not be able to translate SQL query properly from time to time.
+### Limitations of using SQL to transform Pandas dataframes
+* May occasionally generate incorrect results
+* Ordering of rows is not strict unless ORDER BY clause is specified
+* No support for Window functions: https://www.sqlite.org/windowfunctions.html
+* If SQL query contains WHERE clause with `LIKE` operator, incorrect result might be generated
+
+## Use English to visualize Pandas dataframes
+Coming soon!
+
+## Printing out translated code
+You can ask DataWise to print translated code to console using `code=True` flag.
+```python
+import logging
+import sys
+
+root = logging.getLogger()
+root.setLevel(logging.INFO)
+handler = logging.StreamHandler(sys.stdout)
+handler.setLevel(logging.INFO)
+root.addHandler(handler)
+
+...
+
+df = datawise.sql("SELECT COUNT(country) FROM countries", {
+  "countries": countries
+}, code=True)
+```
 
 ## Error Handling
 Errors could happen if we cannot translate the SQL query. Consider the following example:
@@ -124,27 +160,13 @@ ERROR    root:__init__.py:47 We couldn't translate your query. Here is python co
 return_df = bad_table['bad_column']
 ```
 
-You should modify the SQL query so that it works based on the code we attempted to generate.
-
-## Development
-
-```bash
-python -m venv venv
-source venv/bin/activate
-poetry install
-poetry run pytest tests/tests.py -s
-
-pip install --upgrade build
-rm -rf dist && python -m build
-
-pip install --upgrade twine
-twine upload --repository pypi dist/*
-```
+You can modify the SQL query so that it works based on the code we attempted to generate.
+You can also take the translated code and use it after modifying it to work.
 
 ## 📜 License
 
 DataWise is licensed under the Apache 2.0 License. See the LICENSE file for more details.
 
-## Acknowledgements
+## 🤝 Acknowledgements
 
 - This project is leverages [pandas](https://github.com/pandas-dev/pandas) library by independent contributors, but it's in no way affiliated with the pandas project.
