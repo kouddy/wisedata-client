@@ -41,7 +41,7 @@ countries = pd.DataFrame({
 })
 
 datawise = dw.DataWise(api_key="you_api_key_here")
-df = datawise.sql("SELECT COUNT(country) AS NumCountry FROM countries", {
+df = datawise.sql("SELECT COUNT(country) FROM countries", {
   "countries": countries
 }, code=True) # "code=True" will print out the code in addition to transforming dataframe.
 print(df)
@@ -50,7 +50,7 @@ print(df)
 The above code will return the following dataframe:
 
 ```
-   NumCountry
+   count
 0          10
 ```
 
@@ -92,6 +92,13 @@ The above code will return the following dataframe:
 8           Japan   4380756541440             5.87           9
 9           China  14631844184064             5.12          10
 ```
+
+## Limitations
+Most of SQLite syntax of SELECT statements are supported.
+Here are some of the limitations at this moment:
+* We don't support Window functions at the moment: https://www.sqlite.org/windowfunctions.html
+* If your query contains WHERE clause with `LIKE` operator, we might not be able to translate it properly.
+* We might not be able to translate SQL query properly from time to time.
 
 ## Error Handling
 Errors could happen if we cannot translate the SQL query. Consider the following example:
