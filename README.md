@@ -2,12 +2,11 @@
 
 ### DataWise is your co-pilot for performing data analysis and visualization in Python.
 
-## Capabilities
-* Use SQL to transform Pandas dataframes
-* Use English to visualize Pandas dataframes (beta)
+| Capabilities                                      | Limitations                                 |
+|---------------------------------------------------|---------------------------------------------|
+| Use SQL to transform Pandas dataframes            | May occasionally generate incorrect results |
+| Use English to visualize Pandas dataframes (beta) |                                             |
 
-## Limitations
-* May occasionally generate incorrect results
 
 ## 🔍 Demo
 Try out DataWise in your browser:
@@ -34,17 +33,12 @@ dw = DataWise(api_key="you_api_key_here")
 ```
 
 ## Use SQL to transform Pandas dataframes
-You can use SQLite style SQL query to transform Pandas dataframes. Example:
-```sql
-SELECT * FROM countries LEFT JOIN country_populations ON countries.country = country_populations.country
-```
-
 You need to install `pandas` and `numpy` packages as pre-requisites for SQL query.
 ```bash
 pip install pandas numpy
 ```
 
-To transform, simply call `sql` function.
+To transform, simply call `sql` function. You can use SQLite style SQL query to transform Pandas dataframes.
 ```python
 from datawise import DataWise
 import pandas as pd
@@ -65,7 +59,7 @@ print(df)
 The above code will return the following dataframe:
 
 ```
-   count
+        count
 0          10
 ```
 
@@ -129,7 +123,7 @@ from datawise import DataWise
 
 dw = DataWise(api_key="you_api_key_here")
 tips = sns.load_dataset("tips")
-dw.viz("Show me relationship between total bill and tip. Each day should have different colour. Title is: Total Bill vs Tip", { "tips": tips }, code=True)
+dw.viz("Show me relationship between total bill and tip. Each day should have different colour. Title is: Total Bill vs Tip", { "tips": tips })
 ```
 
 ## Printing out translated code
