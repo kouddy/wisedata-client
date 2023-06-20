@@ -3,7 +3,7 @@ import logging
 import os
 import requests
 
-from .exceptions import AuthorizationError, DataWiseInternalError, TranslationError
+from .exceptions import AuthorizationError, BadRequestError, DataWiseInternalError, TranslationError
 from dotenv import load_dotenv
 from requests.exceptions import RequestException
 from retry import retry
@@ -61,7 +61,8 @@ class DataWise:
       }
     )
 
-    if (response.status_code == 400): raise AuthorizationError()
+    if (response.status_code == 400): raise BadRequestError(response.text)
+    if (response.status_code == 401): raise AuthorizationError()
     if (response.status_code >= 500): raise DataWiseInternalError()
 
     python_code = response.json()
@@ -127,7 +128,8 @@ class DataWise:
       }
     )
 
-    if (response.status_code == 400): raise AuthorizationError()
+    if (response.status_code == 400): raise BadRequestError(response.text)
+    if (response.status_code == 401): raise AuthorizationError()
     if (response.status_code >= 500): raise DataWiseInternalError()
 
     python_code = response.json()
