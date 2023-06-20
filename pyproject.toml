@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "datawise"
-version = "0.0.14"
+version = "0.0.15"
 description = "DataWise is your co-pilot for performing data analysis and visualization in Python."
 authors = ["DataWise Team"]
 readme = "README.md"
@@ -14,12 +14,14 @@ urllib3 = "^1.26.6"
 
 [tool.poetry.dev-dependencies]
 black = "^21.9b0"
-pandas = "^2.0.2"
 numpy = "^1.25.0"
+matplotlib = "3.7.1"
+pandas = "^2.0.2"
 pytest = "^6.2.5"
 pytest-cov = "^2.12.1"
 pytest-sugar = "^0.9.4"
 pytest-watch = "^4.2.0"
+seaborn = "0.12.2"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

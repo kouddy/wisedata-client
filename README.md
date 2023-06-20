@@ -4,7 +4,7 @@
 
 ## Capabilities
 * Use SQL to transform Pandas dataframes
-* Coming soon: Use English to visualize Pandas dataframes
+* Use English to visualize Pandas dataframes (beta)
 
 ## Limitations
 * May occasionally generate incorrect results
@@ -114,8 +114,23 @@ The above code will return the following dataframe:
 * No support for Window functions: https://www.sqlite.org/windowfunctions.html
 * If SQL query contains WHERE clause with `LIKE` operator, incorrect result might be generated
 
-## Use English to visualize Pandas dataframes
-Coming soon!
+## Use English to visualize Pandas dataframes (beta)
+You can write English to describe how you want to visualize your dataframe.
+This feature is available as beta feature so accurate result is not guaranteed.
+
+```python
+from datawise import DataWise
+import pandas as pd
+
+countries = pd.DataFrame({
+    "country": ["United States", "United Kingdom", "France", "Germany", "Italy", "Spain", "Canada", "Australia", "Japan", "China"],
+    "gdp": [19294482071552, 2891615567872, 2411255037952, 3435817336832, 1745433788416, 1181205135360, 1607402389504, 1490967855104, 4380756541440, 14631844184064],
+    "happiness_index": [6.94, 7.16, 6.66, 7.07, 6.38, 6.4, 7.23, 7.22, 5.87, 5.12]
+})
+
+dw = DataWise(api_key="you_api_key_here")
+dw.viz("Show me bar chart with country's gdp sorted by gdp descending", { "countries": countries })
+```
 
 ## Printing out translated code
 You can ask DataWise to print translated code to console using `code=True` flag.
