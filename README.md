@@ -1,12 +1,12 @@
 # DataWise
 
-### DataWise is your co-pilot for performing data analysis and visualization in Python.
-
+### AI Assistant for data analysis and visualization
 | Capabilities                                      | Limitations                                 |
 |---------------------------------------------------|---------------------------------------------|
 | Use SQL to transform Pandas dataframes            | May occasionally generate incorrect results |
 | Use English to visualize Pandas dataframes (beta) |                                             |
 
+[Get your API Key](https://datawise.vercel.app/)
 
 ## 🔍 Demo
 Try out DataWise in your browser:

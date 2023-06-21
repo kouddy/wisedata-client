@@ -6,9 +6,9 @@ def read(fname):
 
 setup(
     name = "datawise",
-    version = "0.0.18",
+    version = "0.0.19",
     author = "DataWise Team",
-    description = ("DataWise is your co-pilot for performing data analysis and visualization in Python."),
+    description = ("AI Assistant for data analysis and visualization"),
     license = "Apache 2.0",
     keywords = "datawise data-analysis data-science pandas numpy",
     url = "https://pypi.org/project/datawise/",
