@@ -1,6 +1,6 @@
 # DataWise
 
-### AI Assistant for data analysis and visualization
+### AI Assistant for Python Data Analytics
 | Capabilities                                      | Limitations                                 |
 |---------------------------------------------------|---------------------------------------------|
 | Use SQL to transform Pandas dataframes            | May occasionally generate incorrect results |
