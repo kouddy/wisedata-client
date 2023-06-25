@@ -6,7 +6,7 @@ def read(fname):
 
 setup(
     name = "datawise",
-    version = "0.0.21",
+    version = "0.0.22",
     author = "DataWise Team",
     description = ("AI Assistant for Python Data Analytics"),
     license = "Apache 2.0",
