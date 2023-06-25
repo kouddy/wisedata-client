@@ -7,6 +7,8 @@ class DataWiseInternalError(DataWiseError):
   """
   Raised when an internal error occurs
   """
+  def __init__(self, error_msg=""):
+    super().__init__(error_msg)
 
 class BadRequestError(DataWiseError):
   """
