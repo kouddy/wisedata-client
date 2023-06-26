@@ -13,7 +13,7 @@ class WiseData:
   """Creates a new WiseData API client."""
   def __init__(
     self, 
-    api_base="https://wisedata.vercel.app/api",
+    api_base="https://www.wisedata.app/api",
     api_key=None
   ):
     load_dotenv()
