@@ -16,7 +16,7 @@ Try out WiseData in your browser:
 ## 🔧 Quick install
 Install WiseData client first:
 ```bash
-pip install WiseData
+pip install wisedata
 ```
 
 Configure with your account's API key.
