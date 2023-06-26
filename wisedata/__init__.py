@@ -142,7 +142,7 @@ class WiseData:
     try:
       exec(python_code, globals, locals)
       if isinstance(locals["return_df"], pd.DataFrame):
-        return_df=locals["return_df"].reset_index(drop=True)
+        return_df=locals["return_df"]
         if code: logging.info(f"Given prompt: \n{prompt} \nOutput code: \n{python_code}\n")
       else:
         num_retries += 1

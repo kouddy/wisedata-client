@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "wisedata"
-version = "1.0.1"
+version = "1.0.2"
 description = "AI Assistant for Python Data Analytics"
 authors = ["WiseData Team"]
 readme = "README.md"

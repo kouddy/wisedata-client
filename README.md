@@ -1,12 +1,13 @@
 # WiseData
 
 ### AI Assistant for Python Data Analytics
-| Capabilities                                      | Limitations                                 |
-|---------------------------------------------------|---------------------------------------------|
-| Use SQL to transform Pandas dataframes            | May occasionally generate incorrect results |
-| Use English to visualize Pandas dataframes (beta) |                                             |
+| Capabilities                                      | Limitations                                     |
+|---------------------------------------------------|-------------------------------------------------|
+| Use SQL to transform Pandas dataframes            | May occasionally generate incorrect results     |
+| Use English to transform Pandas dataframes        | May generate incorrect results due to ambiguity |
+| Use English to visualize Pandas dataframes        | May generate incorrect results due to ambiguity |
 
-[Get your API Key](https://wisedata.app/)
+[Sign Up Here](https://wisedata.app/)
 
 ## 🔍 Demo
 Try out WiseData in your browser:
@@ -56,7 +57,7 @@ df = wd.sql("SELECT COUNT(country) FROM countries", {
 print(df)
 ```
 
-The above code will return the following dataframe:
+The above code will return following dataframe:
 
 ```
         count
@@ -86,7 +87,7 @@ df = wd.sql("SELECT * FROM countries LEFT JOIN country_populations ON countries.
 })
 print(df)
 ```
-The above code will return the following dataframe:
+The above code will return following dataframe:
 
 ```
           country             gdp  happiness_index  population
@@ -108,9 +109,49 @@ The above code will return the following dataframe:
 * No support for Window functions: https://www.sqlite.org/windowfunctions.html
 * If SQL query contains WHERE clause with `LIKE` operator, incorrect result might be generated
 
-## Use English to visualize Pandas dataframes (beta)
+## Use English to transform Pandas dataframes
+Using English to transform is nice for simple transformations. Sometimes transforming data using SQL can be complex whereas easy for English.
+
+To transform, simply call `transform` function.
+```python
+from wisedata import WiseData
+import pandas as pd
+
+countries = pd.DataFrame({
+    "country": ["United States", "United Kingdom", "France", "Germany", "Italy", "Spain", "Canada", "Australia", "Japan", "China"],
+    "gdp": [19294482071552, 2891615567872, 2411255037952, 3435817336832, 1745433788416, 1181205135360, 1607402389504, 1490967855104, 4380756541440, 14631844184064],
+    "happiness_index": [6.94, 7.16, 6.66, 7.07, 6.38, 6.4, 7.23, 7.22, 5.87, 5.12]
+})
+
+wd = WiseData(api_key="you_api_key_here")
+df = wd.transform("give me gdp data pivotted by country", {
+  "countries": countries
+})
+print(df)
+```
+
+The above code will return the following dataframe:
+
+```
+gdp             1181205135360   1490967855104   1607402389504   1745433788416   2411255037952   2891615567872   3435817336832   4380756541440   14631844184064  19294482071552
+country                                                                                                                                                                       
+Australia                  NaN            7.22             NaN             NaN             NaN             NaN             NaN             NaN             NaN             NaN
+Canada                     NaN             NaN            7.23             NaN             NaN             NaN             NaN             NaN             NaN             NaN
+China                      NaN             NaN             NaN             NaN             NaN             NaN             NaN             NaN            5.12             NaN
+France                     NaN             NaN             NaN             NaN            6.66             NaN             NaN             NaN             NaN             NaN
+Germany                    NaN             NaN             NaN             NaN             NaN             NaN            7.07             NaN             NaN             NaN
+Italy                      NaN             NaN             NaN            6.38             NaN             NaN             NaN             NaN             NaN             NaN
+Japan                      NaN             NaN             NaN             NaN             NaN             NaN             NaN            5.87             NaN             NaN
+Spain                      6.4             NaN             NaN             NaN             NaN             NaN             NaN             NaN             NaN             NaN
+United Kingdom             NaN             NaN             NaN             NaN             NaN            7.16             NaN             NaN             NaN             NaN
+United States              NaN             NaN             NaN             NaN             NaN             NaN             NaN             NaN             NaN            6.94
+``` 
+
+### Limitations of using English to transform Pandas dataframes
+* May generate incorrect results due to ambiguity
+
+## Use English to visualize Pandas dataframes
 You can write English to describe how you want to visualize your dataframe.
-This feature is available as beta feature so accurate result is not guaranteed.
 
 You need to install `matplotlib` and `seaborn` packages as pre-requisites for SQL query.
 ```bash

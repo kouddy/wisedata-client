@@ -24,6 +24,11 @@ def test_simple():
   })
   print(df)
 
+  df = wd.transform("give me gdp data pivotted by country", {
+    "countries": countries
+  })
+  print(df)
+
   df = wd.transform("Give me number of countries.", {
     "countries": countries
   }, code=True)
