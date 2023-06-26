@@ -6,6 +6,7 @@ source venv/bin/activate
 poetry install
 poetry run pytest tests/test_sql.py -s
 poetry run pytest tests/test_nl.py -s
+poetry run pytest tests/test_viz.py -s
 
 pip install --upgrade build
 rm -rf dist && python -m build

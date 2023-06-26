@@ -6,7 +6,7 @@
 | Use SQL to transform Pandas dataframes            | May occasionally generate incorrect results |
 | Use English to visualize Pandas dataframes (beta) |                                             |
 
-[Get your API Key](https://datawise.vercel.app/)
+[Get your API Key](https://wisedata.app/)
 
 ## 🔍 Demo
 Try out DataWise in your browser:

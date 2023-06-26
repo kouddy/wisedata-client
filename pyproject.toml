@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "datawise"
-version = "0.0.22"
+version = "0.0.23"
 description = "AI Assistant for Python Data Analytics"
 authors = ["DataWise Team"]
 readme = "README.md"

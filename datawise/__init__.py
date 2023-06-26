@@ -13,7 +13,7 @@ class DataWise:
   """Creates a new DataWise API client."""
   def __init__(
     self, 
-    api_base="https://datawise.vercel.app/api",
+    api_base="https://wisedata.vercel.app/api",
     api_key=None
   ):
     load_dotenv()
