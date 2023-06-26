@@ -1,4 +1,4 @@
-# DataWise
+# WiseData
 
 ### AI Assistant for Python Data Analytics
 | Capabilities                                      | Limitations                                 |
@@ -9,27 +9,27 @@
 [Get your API Key](https://wisedata.app/)
 
 ## 🔍 Demo
-Try out DataWise in your browser:
+Try out WiseData in your browser:
 
 [![Open in Colab](https://camo.githubusercontent.com/84f0493939e0c4de4e6dbe113251b4bfb5353e57134ffd9fcab6b8714514d4d1/68747470733a2f2f636f6c61622e72657365617263682e676f6f676c652e636f6d2f6173736574732f636f6c61622d62616467652e737667)](https://colab.research.google.com/drive/1onQI_V6NrAnEDY-o6N068xLyvsFojynf?usp=sharing)
 
 ## 🔧 Quick install
-Install DataWise client first:
+Install WiseData client first:
 ```bash
-pip install datawise
+pip install WiseData
 ```
 
 Configure with your account's API key.
-Either set it as `DATAWISE_API_KEY` environment variable before using the library:
+Either set it as `WISEDATA_API_KEY` environment variable before using the library:
 ```bash
-export DATAWISE_API_KEY=sk-...
+export WISEDATA_API_KEY=sk-...
 ```
 
 Or set `api_key` to its value:
 ```python
-from datawise import DataWise
+from wisedata import WiseData
 
-dw = DataWise(api_key="you_api_key_here")
+wd = WiseData(api_key="you_api_key_here")
 ```
 
 ## Use SQL to transform Pandas dataframes
@@ -40,7 +40,7 @@ pip install pandas numpy
 
 To transform, simply call `sql` function. You can use SQLite style SQL query to transform Pandas dataframes.
 ```python
-from datawise import DataWise
+from wisedata import WiseData
 import pandas as pd
 
 countries = pd.DataFrame({
@@ -49,8 +49,8 @@ countries = pd.DataFrame({
     "happiness_index": [6.94, 7.16, 6.66, 7.07, 6.38, 6.4, 7.23, 7.22, 5.87, 5.12]
 })
 
-dw = DataWise(api_key="you_api_key_here")
-df = dw.sql("SELECT COUNT(country) FROM countries", {
+wd = WiseData(api_key="you_api_key_here")
+df = wd.sql("SELECT COUNT(country) FROM countries", {
   "countries": countries
 })
 print(df)
@@ -65,7 +65,7 @@ The above code will return the following dataframe:
 
 You can also do joins of multiple dataframes:
 ```python
-from datawise import DataWise
+from wisedata import WiseData
 import pandas as pd
 
 countries = pd.DataFrame({
@@ -79,8 +79,8 @@ country_populations = pd.DataFrame({
     "population": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
 })
 
-dw = DataWise(api_key="you_api_key_here")
-df = dw.sql("SELECT * FROM countries LEFT JOIN country_populations ON countries.country = country_populations.country", {
+wd = WiseData(api_key="you_api_key_here")
+df = wd.sql("SELECT * FROM countries LEFT JOIN country_populations ON countries.country = country_populations.country", {
   "countries": countries,
   "country_populations": country_populations
 })
@@ -119,15 +119,15 @@ pip install matplotlib seaborn
 
 To visualize, simply call `viz` function.
 ```python
-from datawise import DataWise
+from wisedata import WiseData
 
-dw = DataWise(api_key="you_api_key_here")
+wd = WiseData(api_key="you_api_key_here")
 tips = sns.load_dataset("tips")
-dw.viz("Show me relationship between total bill and tip. Each day should have different colour. Title is: Total Bill vs Tip", { "tips": tips })
+wd.viz("Show me relationship between total bill and tip. Each day should have different colour. Title is: Total Bill vs Tip", { "tips": tips })
 ```
 
 ## Printing out translated code
-You can ask DataWise to print translated code to console using `code=True` flag.
+You can ask WiseData to print translated code to console using `code=True` flag.
 ```python
 import logging
 import sys
@@ -140,7 +140,7 @@ root.addHandler(handler)
 
 ...
 
-df = dw.sql("SELECT COUNT(country) FROM countries", {
+df = wd.sql("SELECT COUNT(country) FROM countries", {
   "countries": countries
 }, code=True)
 ```
@@ -148,7 +148,7 @@ df = dw.sql("SELECT COUNT(country) FROM countries", {
 ## Error Handling
 Errors could happen if we cannot translate the SQL query. Consider the following example:
 ```python
-from datawise import DataWise
+from wisedata import WiseData
 import pandas as pd
 
 countries = pd.DataFrame({
@@ -157,8 +157,8 @@ countries = pd.DataFrame({
     "happiness_index": [6.94, 7.16, 6.66, 7.07, 6.38, 6.4, 7.23, 7.22, 5.87, 5.12]
 })
 
-dw = DataWise(api_key="you_api_key_here")
-dw.sql("SELECT bad_column FROM bad_table", {
+wd = WiseData(api_key="you_api_key_here")
+wd.sql("SELECT bad_column FROM bad_table", {
   "countries": countries
 })
 ```
@@ -174,7 +174,7 @@ You can also take the translated code and use it after modifying it to work.
 
 ## 📜 License
 
-DataWise is licensed under the Apache 2.0 License. See the LICENSE file for more details.
+WiseData is licensed under the Apache 2.0 License. See the LICENSE file for more details.
 
 ## 🤝 Acknowledgements
 

@@ -1,9 +1,9 @@
-from datawise import DataWise
+from wisedata import WiseData
 import logging
 import pandas as pd
 import sys
 
-from datawise.exceptions import AuthorizationError, TranslationError
+from wisedata.exceptions import AuthorizationError, TranslationError
 
 root = logging.getLogger()
 root.setLevel(logging.INFO)
@@ -18,13 +18,13 @@ def test_simple():
       "happiness_index": [6.94, 7.16, 6.66, 7.07, 6.38, 6.4, 7.23, 7.22, 5.87, 5.12]
   })
 
-  dw = DataWise()
-  df = dw.sql("SELECT * FROM countries", {
+  wd = WiseData()
+  df = wd.sql("SELECT * FROM countries", {
     "countries": countries
   })
   print(df)
 
-  df = dw.sql("SELECT COUNT(country) AS NumCountry FROM countries", {
+  df = wd.sql("SELECT COUNT(country) AS NumCountry FROM countries", {
     "countries": countries
   }, code=True)
   print(df)
@@ -41,8 +41,8 @@ def test_multiple_tables():
       "population": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
   })
 
-  dw = DataWise()
-  df = dw.sql("SELECT * FROM countries LEFT JOIN country_populations ON countries.country = country_populations.country", {
+  wd = WiseData()
+  df = wd.sql("SELECT * FROM countries LEFT JOIN country_populations ON countries.country = country_populations.country", {
     "countries": countries,
     "country_populations": country_populations
   }, code=True)
@@ -55,10 +55,10 @@ def test_error():
       "happiness_index": [6.94, 7.16, 6.66, 7.07, 6.38, 6.4, 7.23, 7.22, 5.87, 5.12]
   })
   
-  dw = DataWise(api_key="sk-wrong-key")
+  wd = WiseData(api_key="sk-wrong-key")
 
   try:
-    dw.sql("SELECT * FROM countries", {
+    wd.sql("SELECT * FROM countries", {
       "countries": countries
     }, code=True)
   except AuthorizationError as e:
@@ -71,9 +71,9 @@ def test_exception():
       "happiness_index": [6.94, 7.16, 6.66, 7.07, 6.38, 6.4, 7.23, 7.22, 5.87, 5.12]
   })
     
-  dw = DataWise()
+  wd = WiseData()
   try:
-    dw.sql("SELECT bad_column FROM bad_table", {
+    wd.sql("SELECT bad_column FROM bad_table", {
       "countries": countries
     })
   except TranslationError:

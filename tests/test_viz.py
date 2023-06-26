@@ -1,5 +1,5 @@
-from datawise import DataWise
-from datawise.exceptions import BadRequestError
+from wisedata import WiseData
+from wisedata.exceptions import BadRequestError
 
 import logging
 import pandas as pd
@@ -18,24 +18,24 @@ countries = pd.DataFrame({
 })
 
 def test_bar_chart():
-  dw = DataWise()
-  dw.viz("Show me bar chart with country's gdp sorted by gdp descending.", { "countries": countries }, code=True)
+  wd = WiseData()
+  wd.viz("Show me bar chart with country's gdp sorted by gdp descending.", { "countries": countries }, code=True)
 
 def test_scatter_plot():
-  dw = DataWise()
-  dw.viz("Show me relationship between gdp and happiness_index. Include title", { "countries": countries }, code=True)
+  wd = WiseData()
+  wd.viz("Show me relationship between gdp and happiness_index. Include title", { "countries": countries }, code=True)
 
 def test_exception():
-  dw = DataWise()
+  wd = WiseData()
   try:
-    dw.viz("Error", { "countries": countries }, code=True)
+    wd.viz("Error", { "countries": countries }, code=True)
   except BadRequestError as e:
     if ("Number of words need to be larger than 5 and less than or equal to 20." in e.msg):
       pass
 
-  dw = DataWise()
+  wd = WiseData()
   try:
-    dw.viz("This is long message. This is long message. This is long message. This is long message. This is long message. This is long message. This is long message.", { "countries": countries }, code=True)
+    wd.viz("This is long message. This is long message. This is long message. This is long message. This is long message. This is long message. This is long message.", { "countries": countries }, code=True)
   except BadRequestError as e:
     if ("Number of words need to be larger than 5 and less than or equal to 20." in e.msg):
       pass

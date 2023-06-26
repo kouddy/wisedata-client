@@ -3,22 +3,22 @@ import logging
 import os
 import requests
 
-from .exceptions import AuthorizationError, BadRequestError, DataWiseInternalError, TranslationError
+from .exceptions import AuthorizationError, BadRequestError, WiseDataInternalError, TranslationError
 from dotenv import load_dotenv
 from requests.exceptions import RequestException
 from retry import retry
 
 
-class DataWise:
-  """Creates a new DataWise API client."""
+class WiseData:
+  """Creates a new WiseData API client."""
   def __init__(
     self, 
     api_base="https://wisedata.vercel.app/api",
     api_key=None
   ):
     load_dotenv()
-    self.api_base = api_base if api_base else os.getenv("DATAWISE_API_BASE")
-    self.api_key = api_key if api_key else os.getenv("DATAWISE_API_KEY")
+    self.api_base = api_base if api_base else os.getenv("WISEDATA_API_BASE")
+    self.api_key = api_key if api_key else os.getenv("WISEDATA_API_KEY")
   
   def sql(self, query, dataframes, code=False):
     """
@@ -38,7 +38,7 @@ class DataWise:
     """
     return self._sql(query, dataframes, code=code)
 
-  @retry(exceptions=(RequestException, DataWiseInternalError), tries=3, delay=2)
+  @retry(exceptions=(RequestException, WiseDataInternalError), tries=3, delay=2)
   def _sql(self, query, dataframes, error=None, code=False, num_retries=0, prev_code=None):
     if not (type(dataframes) is dict): raise Exception("dataframes needs to be a dictionary with key being dataframe name and value being the dataframe.")
     if num_retries >= 2:
@@ -62,7 +62,7 @@ class DataWise:
 
     if (response.status_code == 400): raise BadRequestError(response.text)
     if (response.status_code == 401): raise AuthorizationError()
-    if (response.status_code >= 500): raise DataWiseInternalError()
+    if (response.status_code >= 500): raise WiseDataInternalError()
 
     python_code = response.json()
 
@@ -106,7 +106,7 @@ class DataWise:
     """
     return self._transform(prompt, dataframes, code=code)
   
-  @retry(exceptions=(RequestException, DataWiseInternalError), tries=3, delay=2)
+  @retry(exceptions=(RequestException, WiseDataInternalError), tries=3, delay=2)
   def _transform(self, prompt, dataframes, code=False, error=None, num_retries=0, prev_code=None):
     if not (type(dataframes) is dict): raise Exception("dataframes needs to be a dictionary with key being dataframe name and value being the dataframe.")
 
@@ -131,7 +131,7 @@ class DataWise:
 
     if (response.status_code == 400): raise BadRequestError(response.text)
     if (response.status_code == 401): raise AuthorizationError()
-    if (response.status_code >= 500): raise DataWiseInternalError()
+    if (response.status_code >= 500): raise WiseDataInternalError()
 
     python_code = response.json()
 
@@ -174,7 +174,7 @@ class DataWise:
     """
     return self._viz(prompt, dataframes, code=code)
 
-  @retry(exceptions=(RequestException, DataWiseInternalError), tries=3, delay=2)
+  @retry(exceptions=(RequestException, WiseDataInternalError), tries=3, delay=2)
   def _viz(self, prompt, dataframes, code=False, error=None, num_retries=0, prev_code=None):
     if not (type(dataframes) is dict): raise Exception("dataframes needs to be a dictionary with key being dataframe name and value being the dataframe.")
 
@@ -199,7 +199,7 @@ class DataWise:
 
     if (response.status_code == 400): raise BadRequestError(response.text)
     if (response.status_code == 401): raise AuthorizationError()
-    if (response.status_code >= 500): raise DataWiseInternalError()
+    if (response.status_code >= 500): raise WiseDataInternalError()
 
     python_code = response.json()
 

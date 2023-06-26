@@ -1,9 +1,9 @@
-from datawise import DataWise
+from wisedata import WiseData
 import logging
 import pandas as pd
 import sys
 
-from datawise.exceptions import TranslationError
+from wisedata.exceptions import TranslationError
 
 root = logging.getLogger()
 root.setLevel(logging.INFO)
@@ -18,13 +18,13 @@ def test_simple():
       "happiness_index": [6.94, 7.16, 6.66, 7.07, 6.38, 6.4, 7.23, 7.22, 5.87, 5.12]
   })
 
-  dw = DataWise()
-  df = dw.transform("Give me all countries.", {
+  wd = WiseData()
+  df = wd.transform("Give me all countries.", {
     "countries": countries
   })
   print(df)
 
-  df = dw.transform("Give me number of countries.", {
+  df = wd.transform("Give me number of countries.", {
     "countries": countries
   }, code=True)
   print(df)
@@ -41,8 +41,8 @@ def test_multiple_tables():
       "population": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
   })
 
-  dw = DataWise()
-  df = dw.sql("Give me all data with countries and country_populations combined", {
+  wd = WiseData()
+  df = wd.sql("Give me all data with countries and country_populations combined", {
     "countries": countries,
     "country_populations": country_populations
   }, code=True)
@@ -55,9 +55,9 @@ def test_exception():
       "happiness_index": [6.94, 7.16, 6.66, 7.07, 6.38, 6.4, 7.23, 7.22, 5.87, 5.12]
   })
     
-  dw = DataWise()
+  wd = WiseData()
   try:
-    dw.transform("Give me list of values for this_is_error", {
+    wd.transform("Give me list of values for this_is_error", {
       "countries": countries
     })
   except TranslationError:
