@@ -6,11 +6,11 @@ def read(fname):
 
 setup(
     name = "wisedata",
-    version = "1.0.3",
+    version = "1.0.5",
     author = "WiseData Team",
     description = ("AI Assistant for Python Data Analytics"),
     license = "Apache 2.0",
     keywords = "wisedata data-analysis data-science pandas numpy",
-    url = "https://pypi.org/project/wisedata/",
+    url = "https://www.wisedata.app/",
     long_description=read('README.md'),
 )

@@ -1,8 +1,10 @@
 [tool.poetry]
 name = "wisedata"
-version = "1.0.3"
+version = "1.0.5"
 description = "AI Assistant for Python Data Analytics"
 authors = ["WiseData Team"]
+url = "https://www.wisedata.app/"
+homepage = "https://www.wisedata.app/"
 readme = "README.md"
 
 [tool.poetry.dependencies]

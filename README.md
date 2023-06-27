@@ -161,6 +161,7 @@ pip install matplotlib seaborn
 To visualize, simply call `viz` function.
 ```python
 from wisedata import WiseData
+import seaborn as sns
 
 wd = WiseData(api_key="you_api_key_here")
 tips = sns.load_dataset("tips")
