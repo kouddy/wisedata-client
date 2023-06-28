@@ -6,8 +6,8 @@ def read(fname):
 
 setup(
     name = "wisedata",
-    version = "1.0.5",
-    author = "WiseData Team",
+    version = "1.0.6",
+    author = "WiseData Team <wisedata.help@gmail.com>",
     description = ("AI Assistant for Python Data Analytics"),
     license = "Apache 2.0",
     keywords = "wisedata data-analysis data-science pandas numpy",
