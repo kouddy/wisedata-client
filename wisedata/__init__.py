@@ -2,6 +2,7 @@ import json
 import logging
 import os
 import requests
+import time
 
 from .exceptions import AuthorizationError, BadRequestError, WiseDataInternalError, TranslationError
 from dotenv import load_dotenv
@@ -36,14 +37,19 @@ class WiseData:
     Code: bool
       Whether to print/log the pandas code used to transformed dataframes or not.
     """
-    return self._sql(query, dataframes, code=code)
+    try:
+      return self._sql(query, dataframes, code=code)
+    except (TranslationError, WiseDataInternalError) as e:
+      logging.error(f"{e.msg}\nTry to run .sql() again.")
 
-  @retry(exceptions=(RequestException, WiseDataInternalError), tries=3, delay=2)
+  # @retry(exceptions=(RequestException, WiseDataInternalError), tries=3, delay=2)
   def _sql(self, query, dataframes, error=None, code=False, num_retries=0, prev_code=None):
     if not (type(dataframes) is dict): raise Exception("dataframes needs to be a dictionary with key being dataframe name and value being the dataframe.")
     if num_retries >= 2:
-      logging.error(f"We couldn't translate your query. Here is python code we attempted to generate: \n{prev_code}")
-      raise TranslationError()
+      raise TranslationError(f"Here is python code we attempted to generate: \n{prev_code}")
+    elif num_retries > 0: 
+      logging.error(f"Retrying with query: {query}. Issue: {error}. Number of retries: {num_retries}")
+      time.sleep(2)
 
     data = {
       "dataframe": "\n".join([f"{idx+1}. Dataframe named {key} with columns {value.columns.tolist()}" for idx, (key, value) in enumerate(dataframes.items())]),
@@ -104,15 +110,20 @@ class WiseData:
     Code: bool
       Whether to print/log the pandas code used to generate visualization or not.
     """
-    return self._transform(prompt, dataframes, code=code)
+    try:
+      return self._transform(prompt, dataframes, code=code)
+    except (TranslationError, WiseDataInternalError) as e:
+      logging.error(f"{e.msg}\nTry to run .transform() again.")
   
-  @retry(exceptions=(RequestException, WiseDataInternalError), tries=3, delay=2)
+  # @retry(exceptions=(RequestException, WiseDataInternalError), tries=3, delay=2)
   def _transform(self, prompt, dataframes, code=False, error=None, num_retries=0, prev_code=None):
     if not (type(dataframes) is dict): raise Exception("dataframes needs to be a dictionary with key being dataframe name and value being the dataframe.")
 
     if num_retries >= 2:
-      logging.error(f"We couldn't translate your prompt. Here is python code we attempted to generate: \n{prev_code}")
-      raise TranslationError()
+      raise TranslationError(f"Here is python code we attempted to generate: \n{prev_code}")
+    elif num_retries > 0: 
+      logging.error(f"Retrying with prompt: {prompt}. Issue: {error}. Number of retries: {num_retries}")
+      time.sleep(2)
     
     data = {
       "dataframe": "\n".join([f"{idx+1}. Dataframe named {key} with columns={value.columns.tolist()} {'and index=[' + value.index.name + ']' if value.index.name else ''}." for idx, (key, value) in enumerate(dataframes.items())]),
@@ -172,15 +183,20 @@ class WiseData:
     Code: bool
       Whether to print/log the pandas code used to generate visualization or not.
     """
-    return self._viz(prompt, dataframes, code=code)
+    try:
+      return self._viz(prompt, dataframes, code=code)
+    except (TranslationError, WiseDataInternalError) as e:
+      logging.error(f"{e.msg}\nTry to run .viz() again.")
 
-  @retry(exceptions=(RequestException, WiseDataInternalError), tries=3, delay=2)
+  # @retry(exceptions=(RequestException, WiseDataInternalError), tries=3, delay=2)
   def _viz(self, prompt, dataframes, code=False, error=None, num_retries=0, prev_code=None):
     if not (type(dataframes) is dict): raise Exception("dataframes needs to be a dictionary with key being dataframe name and value being the dataframe.")
 
     if num_retries >= 2:
-      logging.error(f"We couldn't translate your prompt into visualization. Here is python code we attempted to generate: \n{prev_code}")
-      raise TranslationError()
+      raise TranslationError(f"Here is python code we attempted to generate: \n{prev_code}")
+    elif num_retries > 0: 
+      logging.error(f"Retrying with prompt: {prompt}. Issue: {error}. Number of retries: {num_retries}")
+      time.sleep(2)
     
     data = {
       "dataframe": "\n".join([f"{idx+1}. Dataframe named {key} with columns={value.columns.tolist()} {'and index=[' + value.index.name + ']' if value.index.name else ''}." for idx, (key, value) in enumerate(dataframes.items())]),

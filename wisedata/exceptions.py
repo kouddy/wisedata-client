@@ -7,7 +7,7 @@ class WiseDataInternalError(WiseDataError):
   """
   Raised when an internal error occurs
   """
-  def __init__(self, error_msg=""):
+  def __init__(self, error_msg="Oops! Something went wrong with WiseData."):
     super().__init__(error_msg)
 
 class BadRequestError(WiseDataError):
