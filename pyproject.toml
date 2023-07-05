@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "wisedata"
-version = "1.0.12"
+version = "1.0.13"
 description = "AI Assistant for Python Data Analytics"
 authors = ["WiseData Team <wisedata.help@gmail.com>"]
 homepage = "https://www.wisedata.app/"

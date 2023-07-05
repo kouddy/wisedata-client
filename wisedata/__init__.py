@@ -45,7 +45,7 @@ class WiseData:
   # @retry(exceptions=(RequestException, WiseDataInternalError), tries=3, delay=2)
   def _sql(self, query, dataframes, error=None, code=False, num_retries=0, prev_code=None):
     if not (type(dataframes) is dict): raise Exception("dataframes needs to be a dictionary with key being dataframe name and value being the dataframe.")
-    if num_retries >= 2:
+    if num_retries > 3:
       raise TranslationError(f"Here is python code we attempted to generate: \n{prev_code}")
     elif num_retries > 0: 
       logging.error(f"Retrying with query: {query}. Issue: {error}. Number of retries: {num_retries}")
@@ -119,7 +119,7 @@ class WiseData:
   def _transform(self, prompt, dataframes, code=False, error=None, num_retries=0, prev_code=None):
     if not (type(dataframes) is dict): raise Exception("dataframes needs to be a dictionary with key being dataframe name and value being the dataframe.")
 
-    if num_retries >= 2:
+    if num_retries > 3:
       raise TranslationError(f"Here is python code we attempted to generate: \n{prev_code}")
     elif num_retries > 0: 
       logging.error(f"Retrying with prompt: {prompt}. Issue: {error}. Number of retries: {num_retries}")
@@ -192,7 +192,7 @@ class WiseData:
   def _viz(self, prompt, dataframes, code=False, error=None, num_retries=0, prev_code=None):
     if not (type(dataframes) is dict): raise Exception("dataframes needs to be a dictionary with key being dataframe name and value being the dataframe.")
 
-    if num_retries >= 2:
+    if num_retries > 3:
       raise TranslationError(f"Here is python code we attempted to generate: \n{prev_code}")
     elif num_retries > 0: 
       logging.error(f"Retrying with prompt: {prompt}. Issue: {error}. Number of retries: {num_retries}")
